@@ -1,6 +1,15 @@
 # PrestaShop on Docker
-
 [![Build Status](https://travis-ci.org/PrestaShop/docker.svg?branch=master)](https://travis-ci.org/PrestaShop/docker)
+
+# to run it with docker-compose 
+```
+git clone https://github.com/reyeshl/docker.git prestashop
+cd prestashop
+docker-compose up --build
+
+```
+
+
 
 ## Supported tags
 
