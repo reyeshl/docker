@@ -1,0 +1,56 @@
+
+version: '3.3'
+
+services:
+  db:
+     image: mysql:5.7
+     container_name: mysql57
+     networks:
+      - backend-net
+     ports:
+       - "3306:3306"
+     volumes:
+       - ./magento_db:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: mysqlPW
+       MYSQL_DATABASE: prestashop
+       MYSQL_USER: prestashop
+       MYSQL_PASSWORD: prestashopPW
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin2
+    networks:
+      - backend-net    
+    ports:
+      - "8580:80"
+    links:
+      - db     
+  prestashop:
+    image: prestashop/prestashop:1.7
+    container_name: prestashop
+    networks:
+      - backend-net  
+    links:
+      - db     
+    ports:
+       - "80:80"
+#    volumes:
+#       - ./presta-html:/var/lib/mysql
+    restart: always
+    environment:
+      PS_DEV_MODE: 1 
+      DB_SERVER: db
+      DB_USER: prestashop
+      DB_PASSWD: prestashopPW
+      PS_INSTALL_AUTO: 1
+      ADMIN_MAIL: user1@test.com
+      ADMIN_PASSWD: user1PW
+      PS_ERASE_DB: 0
+
+
+volumes:
+    magento_db:
+    presta-html:
+networks:
+  backend-net:
