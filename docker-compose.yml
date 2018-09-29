@@ -29,14 +29,14 @@ services:
   prestashop:
     image: prestashop/prestashop:1.7
     container_name: prestashop
+    depends_on: 
+      -db
     networks:
       - backend-net  
     links:
       - db     
     ports:
        - "80:80"
-#    volumes:
-#       - ./presta-html:/var/lib/mysql
     restart: always
     environment:
       PS_DEV_MODE: 1 
@@ -44,13 +44,14 @@ services:
       DB_USER: prestashop
       DB_PASSWD: prestashopPW
       PS_INSTALL_AUTO: 1
+      PS_DOMAIN: localhost
+      PS_HANDLE_DYNAMIC_DOMAIN: 1
       ADMIN_MAIL: user1@test.com
       ADMIN_PASSWD: user1PW
       PS_ERASE_DB: 0
-
-
 volumes:
     magento_db:
     presta-html:
 networks:
   backend-net:
+
